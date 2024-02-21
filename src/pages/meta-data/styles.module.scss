@@ -1,0 +1,18 @@
+.tabs-section {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    gap: 20px;
+
+    div {
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .active {
+        color: green;
+        border-bottom: 1px solid green;
+    }
+}

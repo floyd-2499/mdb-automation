@@ -1,0 +1,27 @@
+.sheet-key {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 15px;
+  margin-bottom: 30px;
+
+  h4 span {
+    color: red;
+  }
+
+  input {
+    width: 50px;
+    padding: 5px 10px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    outline: none;
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+
+.disable {
+  pointer-events: none;
+}
