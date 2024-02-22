@@ -11,7 +11,7 @@ const LayoutMain = ({ children }) => {
             <div className={styles['layout-body-wrapper']}>
                 {children}
             </div>
-            <div className="footer">Footer Goes Here</div>
+            <div className="footer">-- Floyd Manuel Dsouza | ESGDS --</div>
         </div>
     )
 }

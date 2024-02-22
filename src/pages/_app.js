@@ -1,5 +1,4 @@
 import LayoutMain from "@/view/layout";
-import '../view/layout/styles/global/_styles.scss';
 import { Provider } from "react-redux";
 import reduxStore from "@/config/store/redux-store";
 

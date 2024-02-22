@@ -9,6 +9,8 @@ import reduxStore from "./config/store/redux-store";
 import DetectLanguages from "./pages/detect-language";
 import Excel from "./pages/excel";
 import NpxToJson from "./pages/npx-json";
+import '../src/view/layout/styles/global/_styles.scss'
+import PDFReader from "./pages/validate-links";
 
 function App() {
   return (
@@ -20,6 +22,7 @@ function App() {
             <Route path={uris.language} element={<DetectLanguages />} />
             <Route path={uris.excel} element={<Excel />} />
             <Route path={uris.npxToJson} element={<NpxToJson />} />
+            <Route path={uris.validateLinks} element={<PDFReader />} />
           </Routes>
         </LayoutMain>
       </Router>

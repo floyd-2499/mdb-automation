@@ -152,7 +152,7 @@ const MetaDataOfLinks = () => {
                 // const result = await fetchMetaData(item["URL"]);
                 const dateInfo = result?.metadata?.info;
 
-                const publicationDate = item["publicationDate"]
+                // const publicationDate = item["publicationDate"]
                 const createdDate = await dateInfo?.CreationDate ? parseDate(dateInfo?.CreationDate) : " "
                 const modifiedDate = await dateInfo?.ModDate ? parseDate(dateInfo?.ModDate) : " "
 

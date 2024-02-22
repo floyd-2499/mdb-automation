@@ -10,23 +10,20 @@ const Header = () => {
                 <LogoMain />
             </div>
             <div className={styles["nav-container"]}>
-                {/* <a href={uris.home} className={styles["header-nav"]}>
+                <a href={uris.home} className={styles["header-nav"]}>
                     Home
-                </a> */}
-                <a href={uris.pdfTable} className={styles["header-nav"]}>
-                    PDF-Table
                 </a>
                 <a href={uris.excel} className={styles["header-nav"]}>
                     Excel
                 </a>
-                <a href={uris.multiExcel} className={styles["header-nav"]}>
+                {/* <a href={uris.multiExcel} className={styles["header-nav"]}>
                     Multi -Excel
-                </a>
+                </a> */}
                 {/* <a href={uris.metaData} className={styles["header-nav"]}>
                     Meta Data
                 </a> */}
                 <a href={uris.language} className={styles["header-nav"]}>
-                    Language
+                    Meta & Language
                 </a>
                 <a href={uris.fieldMapper} className={styles["header-nav"]}>
                     Client Map
@@ -37,8 +34,8 @@ const Header = () => {
                 <a href={uris.colorExcel} className={styles["header-nav"]}>
                     Color-Validate
                 </a>
-                <a href={uris.validateas} className={styles["header-nav"]}>
-                    Validate as
+                <a href={uris.validateLinks} className={styles["header-nav"]}>
+                    Validate Links
                 </a>
                 <a href={uris.npxExcel} className={styles["header-nav"]}>
                     NPX - EXCEL
