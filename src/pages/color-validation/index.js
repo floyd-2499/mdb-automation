@@ -278,7 +278,7 @@ const ColorExcel = () => {
             const a = document.createElement('a');
             const date = new Date()
             a.href = url;
-            a.download = `Pritesh Color ${date.toLocaleString()}.xlsx`;
+            a.download = `Color Check ${date.toLocaleString()}.xlsx`;
             a.click();
             URL.revokeObjectURL(url);
         });

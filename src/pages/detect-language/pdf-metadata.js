@@ -254,7 +254,9 @@ const MetaDataOfLinks = () => {
 
     return (
         <div className={styles["page-contents"]}>
-            <h2>Upload Base Excel</h2>
+            <h1>PDF Meta-Data</h1>
+
+            <h3>Upload Base Excel</h3>
             <ExcelFileUploader onFileUpload={handleUploadFile} />
 
             <br />

@@ -134,7 +134,7 @@ const FieldMapper = () => {
             const a = document.createElement('a');
             const date = new Date()
             a.href = url;
-            a.download = `Jitesh Final Check - ${date.toLocaleString()}.xlsx`;
+            a.download = `Final Check - ${date.toLocaleString()}.xlsx`;
             a.click();
             URL.revokeObjectURL(url);
         });

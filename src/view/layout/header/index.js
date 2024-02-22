@@ -14,7 +14,7 @@ const Header = () => {
                     Home
                 </a>
                 <a href={uris.excel} className={styles["header-nav"]}>
-                    Excel
+                    Excel - Helper
                 </a>
                 {/* <a href={uris.multiExcel} className={styles["header-nav"]}>
                     Multi -Excel
@@ -23,11 +23,11 @@ const Header = () => {
                     Meta Data
                 </a> */}
                 <a href={uris.language} className={styles["header-nav"]}>
-                    Meta & Language
+                    MetaData & Language
                 </a>
-                <a href={uris.fieldMapper} className={styles["header-nav"]}>
+                {/* <a href={uris.fieldMapper} className={styles["header-nav"]}>
                     Client Map
-                </a>
+                </a> */}
                 <a href={uris.fieldCalculations} className={styles["header-nav"]}>
                     %-Calculations
                 </a>

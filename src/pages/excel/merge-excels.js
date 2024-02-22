@@ -140,7 +140,7 @@ const MergeExcels = () => {
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `Swathi Merged.xlsx`;
+            a.download = `Merged Excel.xlsx`;
             a.click();
             URL.revokeObjectURL(url);
         });
@@ -155,7 +155,6 @@ const MergeExcels = () => {
             <MultiFileJson onFileUpload={onFileUpload} />
             <br />
             <br />
-
 
             {loadSuccess && (
                 <div>

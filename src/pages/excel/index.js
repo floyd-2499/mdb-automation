@@ -5,7 +5,7 @@ import ExcelJS from 'exceljs';
 import MergeExcels from "./merge-excels";
 
 const Excel = () => {
-    const [tab, setTab] = useState('merge-excels')
+    const [tab, setTab] = useState("json-to-excel")
     // Json to Excel
     const [jsonFile, setJsonFile] = useState(null);
     // Excel To JSON
@@ -205,7 +205,7 @@ const Excel = () => {
             <br />
             {tab === "json-to-excel" && (
                 <div className={styles['page-contents']}>
-                    <h3>Convert Excel to JSON</h3>
+                    <h3>Convert JSON to Excel</h3>
                     <input type="file" onChange={handleUploadJsonFile} />
                     <button onClick={handleUpload}>Upload and Convert</button>
                 </div>

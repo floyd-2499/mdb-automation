@@ -15,17 +15,17 @@ const tabsData = [
         ref: "metadata"
     },
     {
-        name: "Model - Franc",
+        name: "Detect Languages",
         ref: "model-1"
     },
-    {
-        name: "Model - Language Detect",
-        ref: "model-2"
-    },
+    // {
+    //     name: "Model - Language Detect",
+    //     ref: "model-2"
+    // },
 ]
 
 const DetectLanguages = () => {
-    const [tab, setTab] = useState(tabsData[2]?.ref)
+    const [tab, setTab] = useState(tabsData[1]?.ref)
 
 
     return (
