@@ -26,7 +26,7 @@ const Header = () => {
                     MetaData & Language
                 </a>
                 {/* <a href={uris.fieldMapper} className={styles["header-nav"]}>
-                    Client Map
+                    Client Mapping
                 </a> */}
                 <a href={uris.fieldCalculations} className={styles["header-nav"]}>
                     %-Calculations
@@ -38,7 +38,7 @@ const Header = () => {
                     Validate Links
                 </a>
                 <a href={uris.npxExcel} className={styles["header-nav"]}>
-                    NPX - EXCEL
+                    NPX-EXCEL
                 </a>
                 <a href={uris.npxToJson} className={styles["header-nav"]}>
                     NPX-JSON

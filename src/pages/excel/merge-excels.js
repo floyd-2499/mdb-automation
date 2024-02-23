@@ -148,11 +148,12 @@ const MergeExcels = () => {
 
     return (
         <div className={styles["page-contents"]}>
-            <h1>Merge Excels</h1>
-            <br />
+            <h2>Merge Excels</h2>
 
-            <h2>Upload Base Excel</h2>
+            <h4>Upload Base Excel</h4>
             <MultiFileJson onFileUpload={onFileUpload} />
+            <br />
+            <small style={{ color: "red" }}><i>** This will take <b>1st</b> line as header. **</i></small>
             <br />
             <br />
 

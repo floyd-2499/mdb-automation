@@ -29,9 +29,9 @@ const PDFLanguageFromLinks = () => {
             inputJson.map(async (item) => {
                 const result = await detectLanguageFromPDF(item["link"]);
                 return {
-                    "Provider ID": item["Country"] || "-",
+                    "Provider ID": item["provider_id"] || "-",
                     "Company Name": item["Company Name"] || "-",
-                    "Country": item.country || "-",
+                    "Country": item["Country"] || "-",
                     "Link": result.pdfLink || '-',
                     "Language Code": result?.detectedLanguageCode || "-",
                     "Language Name": result?.detectedLanguageName || " ",
@@ -124,6 +124,9 @@ const PDFLanguageFromLinks = () => {
         <div className={styles["page-contents"]}>
             <h2>Upload Base Excel</h2>
             <ExcelFileUploader onFileUpload={handleUploadFile} />
+            <br />
+            <small style={{ color: "red" }}><i>** Column header for links should be <b>link</b>. </i></small>
+            <small style={{ color: "red" }}><i>Having <b>provider_id</b>, <b>Company Name</b>, and <b>Country</b> would be great. Rest any columns headers are fine **</i></small>
 
             <br />
             <br />

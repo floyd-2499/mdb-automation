@@ -258,6 +258,8 @@ const MetaDataOfLinks = () => {
 
             <h3>Upload Base Excel</h3>
             <ExcelFileUploader onFileUpload={handleUploadFile} />
+            <br />
+            <small style={{ color: "red" }}><i>** Column header for links should be <b>sourceUrl</b>.  Rest any columns headers are fine **</i></small>
 
             <br />
             <br />
