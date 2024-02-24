@@ -12,6 +12,7 @@ const PermIdDetails = () => {
     const [validationTime, setValidationTime] = useState(null);
     const [finalData, setFinalData] = useState(null)
     const [fileName, setFileName] = useState("")
+    const [apiKey, setApiKey] = useState(PERMID_API_KEY)
 
     const handleFileUpload = (data) => {
         setJsonData(data);
@@ -25,7 +26,7 @@ const PermIdDetails = () => {
         const responseArray = []; // Array to store API responses
 
         for (const item of jsonData) {
-            const apiUrl = `https://api-eit.refinitiv.com/permid/search?q=permid:${item.cin}&access-token=${PERMID_API_KEY}`;
+            const apiUrl = `https://api-eit.refinitiv.com/permid/search?q=permid:${item.cin}&access-token=${apiKey}`;
 
             try {
                 const response = await fetch(apiUrl);
@@ -33,19 +34,17 @@ const PermIdDetails = () => {
 
                 if (data.result.organizations.entities.length > 0) {
                     const url = data.result.organizations.entities[0].hasURL;
-                    responseArray.push({ ...item, permid: item.cin, "Company URL": url });
+                    responseArray.push({ ...item, permid: item.cin, "Company URL": url, "Errors": "" });
                 } else {
                     const errorMessage = "No organizations found for permid";
-                    responseArray.push({ ...item, permid: item.cin, error: errorMessage });
+                    responseArray.push({ ...item, permid: item.cin, "Errors": errorMessage });
                 }
 
             } catch (error) {
                 console.error(`Error for permid ${item.cin}:`, error);
-                responseArray.push({ ...item, permid: item.cin, error: error.message });
+                responseArray.push({ ...item, permid: item.cin, "Errors": error.message });
             }
         }
-
-        console.log(responseArray);
         setFinalData(responseArray)
 
         const endTime = new Date();
@@ -89,13 +88,17 @@ const PermIdDetails = () => {
             <h1>Perm Id API</h1>
             <br />
 
+            <h2>API KEY <span style={{ color: "red" }}>*</span></h2>
+            <input className={styles["input-field"]} type="text" value={apiKey} onChange={(e) => setApiKey(e?.target?.value)} />
+
+            <br />
             <h4>Upload Excel</h4>
             <ExcelFileUploader onFileUpload={handleFileUpload} /><br />
             <small style={{ color: "red" }}><i>** Keep <b>cin</b> as permid column header. **</i></small>
             <br />
             <br />
 
-            {jsonData && (<button onClick={findPermidDetails}>Find Details</button>)}
+            {jsonData && (<button className={styles['button']} onClick={findPermidDetails}>Find Details</button>)}
             {loading ? <h4 style={{ color: "red" }}>Loading ...</h4> : ""}
             {validationTime && <h4 style={{ color: "blue" }}>Total Validation Time: {validationTime?.toFixed(2)} minutes</h4>}
             {finalData?.length > 1 && <h3 style={{ color: "green" }}>Validation Done</h3>}
