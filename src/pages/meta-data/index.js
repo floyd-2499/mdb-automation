@@ -160,7 +160,10 @@ const MetaDataAutomated = () => {
                 }
             })
         )
-        setMetaDetails(metaDetails.concat(metaDataList))
+
+        const oldFetched = metaDetails;
+        oldFetched.push(...metaDataList)
+        setMetaDetails(oldFetched)
 
         setFetchLoading(false)
     }
@@ -215,6 +218,7 @@ const MetaDataAutomated = () => {
         processBatches();
     }, [batchwiseData]);
 
+    console.log(metaDetails);
 
     return (
         <div className={styles["page-contents"]}>

@@ -118,7 +118,8 @@ const PDFReader = () => {
             <div>
                 <h1>Excel to JSON Converter</h1>
                 <ExcelFileUploader onFileUpload={handleFileUpload} />
-                {jsonData?.length > 0 && <h4 style={{ color: "green" }}>JSON is Ready with {jsonData?.length} items</h4>}
+                {jsonData?.length > 0 && <h4 style={{ color: "green" }}>JSON is Ready with {jsonData?.length} items</h4>}<br />
+                <small style={{ color: "red" }}><i>** Either have <b>link</b> or <b>url</b> as column header. **</i></small>
             </div>
             <h1>PDF URL Validator</h1>
             <button className={styles['button']} onClick={validateLinks}>Validate PDF URLs</button>
