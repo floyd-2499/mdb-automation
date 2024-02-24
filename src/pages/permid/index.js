@@ -92,6 +92,7 @@ const PermIdDetails = () => {
             <input className={styles["input-field"]} type="text" value={apiKey} onChange={(e) => setApiKey(e?.target?.value)} />
 
             <br />
+            <br />
             <h4>Upload Excel</h4>
             <ExcelFileUploader onFileUpload={handleFileUpload} /><br />
             <small style={{ color: "red" }}><i>** Keep <b>cin</b> as permid column header. **</i></small>
