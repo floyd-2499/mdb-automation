@@ -29,22 +29,48 @@ const NPXExcel = () => {
     //     }
     // };
 
+
     // All Sheets
+    // const handleFileUpload = (e) => {
+    //     const file = e.target.files[0];
+
+    //     if (file) {
+    //         const reader = new FileReader();
+
+    //         reader.onload = (e) => {
+    //             const data = new Uint8Array(e.target.result);
+    //             const workbook = XLSX.read(data, { type: 'array' });
+    //             const allSheetsData = [];
+
+    //             workbook.SheetNames.forEach((sheetName) => {
+    //                 const sheet = workbook.Sheets[sheetName];
+    //                 const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1, raw: true, range: "A1:Z100" });
+    //                 allSheetsData.push(...jsonData);
+    //             });
+
+    //             setInputJson(allSheetsData);
+    //         };
+
+    //         reader.readAsArrayBuffer(file);
+    //     }
+    // };
+
+
     const handleFileUpload = (e) => {
         const file = e.target.files[0];
 
         if (file) {
             const reader = new FileReader();
 
-            reader.onload = (e) => {
-                const data = new Uint8Array(e.target.result);
+            reader.onload = (event) => {
+                const data = new Uint8Array(event.target.result);
                 const workbook = XLSX.read(data, { type: 'array' });
-                const allSheetsData = [];
+                let allSheetsData = [];
 
                 workbook.SheetNames.forEach((sheetName) => {
                     const sheet = workbook.Sheets[sheetName];
                     const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1, raw: true, range: "A1:Z100" });
-                    allSheetsData.push(...jsonData);
+                    allSheetsData = [...allSheetsData, ...jsonData];
                 });
 
                 setInputJson(allSheetsData);
@@ -271,6 +297,7 @@ const NPXExcel = () => {
         }
 
         const formattedTable = processTableArr(tableArr)
+
         const finalizedCompanyDetails = formattedTable?.map(detail => ({ ...companyData[0], ...detail }))
 
         return finalizedCompanyDetails;
@@ -313,7 +340,10 @@ const NPXExcel = () => {
             return extractCompanyData(sepArr)
         })
 
-        return finalData;
+
+
+
+        return finalData
     };
 
     const convertJSONToExcel = (data) => {
@@ -351,6 +381,31 @@ const NPXExcel = () => {
         if (inputJson) {
             const separatedArrays = splitJSON(inputJson);
             const combinedData = [].concat(...separatedArrays); // Combine arrays
+
+            const missingValues = ['Meeting Date', 'Country', 'Ticker', 'Record Date', 'Meeting Type', 'Primary Security ID', 'Voting Policy', 'Shares Voted'];
+
+            for (let i = 1; i < combinedData.length; i++) {
+                const currentObject = combinedData[i];
+                const previousObject = combinedData[i - 1];
+
+                if (currentObject && previousObject) {
+                    // Check if "Company Name" is the same
+                    if (currentObject['company'] === previousObject['company']) {
+                        // Check if any of the keys in missingValues are missing in the current object
+                        const hasMissingValues = missingValues.some(key => !currentObject[key]);
+
+                        if (hasMissingValues) {
+                            // Use the previous object's values for missing keys
+                            missingValues.forEach(key => {
+                                if (!currentObject[key]) {
+                                    currentObject[key] = previousObject[key];
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+
             setCompanyData(combinedData);
             setFetchLoading(false)
         }
