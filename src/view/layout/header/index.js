@@ -16,6 +16,9 @@ const Header = () => {
                 <a href={uris.excel} className={styles["header-nav"]}>
                     Excel - Helper
                 </a>
+                <a href={uris.permid} className={styles["header-nav"]}>
+                    PermId API
+                </a>
                 {/* <a href={uris.multiExcel} className={styles["header-nav"]}>
                     Multi -Excel
                 </a> */}

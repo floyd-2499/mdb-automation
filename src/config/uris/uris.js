@@ -16,6 +16,7 @@ const uris = {
     metaData: "/meta-data",
     pdfTable: "/pdf-table",
     npxExcel: "/npx-excel",
+    permid: "/permid"
 }
 
 export default uris

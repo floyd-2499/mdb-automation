@@ -30,7 +30,7 @@ const DetectLanguages = () => {
 
     return (
         <div className={styles["language-detect-page"]}>
-            <h2>Language Detection</h2>
+            <h2>Metadata & Language Detection</h2>
 
             <div className={styles['tabs-section']}>
                 {tabsData.map(tabItem => (

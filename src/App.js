@@ -14,6 +14,7 @@ import PDFReader from "./pages/validate-links";
 import Home from "./pages/home";
 import ColorExcel from "./pages/color-validation";
 import FieldCalculations from "./pages/field-calculations";
+import PermIdDetails from "./pages/permid";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <Route path={uris.validateLinks} element={<PDFReader />} />
             <Route path={uris.colorExcel} element={<ColorExcel />} />
             <Route path={uris.fieldCalculations} element={<FieldCalculations />} />
+            <Route path={uris.permid} element={<PermIdDetails />} />
           </Routes>
         </LayoutMain>
       </Router>
