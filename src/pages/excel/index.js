@@ -3,6 +3,7 @@ import styles from './styles.module.scss'
 import { ExcelFileUploader } from '../validate-links/index'
 import ExcelJS from 'exceljs';
 import MergeExcels from "./merge-excels";
+import MergeJsons from "./merge-sheets";
 
 const Excel = () => {
     const [tab, setTab] = useState("json-to-excel")
@@ -31,6 +32,10 @@ const Excel = () => {
         {
             name: "Merge Excel",
             ref: "merge-excels"
+        },
+        {
+            name: "Merge Sheets",
+            ref: "merge-sheets"
         },
     ]
 
@@ -243,24 +248,12 @@ const Excel = () => {
                     <button onClick={splitExcels}>Split to Files</button>
                 </div>
             )}
-            {/* {tab === 'merge-excels' && (
-                <div className={styles['page-contents']}>
-                    <h3>Merge Excels</h3>
-                    <br />
-                    <label>Upload Folder</label><br />
-                    <input
-                        type="file"
-                        directory=""
-                        webkitdirectory=""
-                        onChange={handleInputFileChange}
-                        multiple
-                    />
-                </div>
-            )} */}
+            {tab === "merge-sheets" && (
+                <MergeJsons />
+            )}
             {tab === 'merge-excels' && (
                 <MergeExcels />
             )}
-
         </div>
     )
 }
