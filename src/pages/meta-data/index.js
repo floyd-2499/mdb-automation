@@ -13,7 +13,6 @@ pdfjs.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pd
 const batch_size = 200;
 const URL_Header_Name = "sourceUrl"
 
-
 const MetaDataAutomated = () => {
     const [batchwiseData, setBatchwiseData] = useState([]);
     const [fetchLoading, setFetchLoading] = useState(false);
@@ -30,24 +29,6 @@ const MetaDataAutomated = () => {
             const batches = Array.from({ length: Math.ceil(data.length / batch_size) }, (v, i) =>
                 data.slice(i * batch_size, i * batch_size + batch_size)
             );
-
-            // // backups
-            // const jsonData = {
-            //     batches: batches,
-            // };
-
-            // const jsonString = JSON.stringify(jsonData, null, 2);
-
-            // // Create a Blob with the JSON data
-            // const blob = new Blob([jsonString], { type: 'application/json' });
-
-            // // Create a download link
-            // const downloadLink = document.createElement('a');
-            // downloadLink.href = URL.createObjectURL(blob);
-            // downloadLink.download = 'output.json';
-            // document.body.appendChild(downloadLink);
-            // downloadLink.click();
-            // document.body.removeChild(downloadLink);
 
             setBatchwiseData(batches)
         }

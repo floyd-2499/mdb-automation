@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from 'axios';
 import ExcelJS from 'exceljs';
 import * as pdfjs from "pdfjs-dist"
@@ -23,43 +23,6 @@ const MetaDataOfLinks = () => {
             setLoadSuccess(true);
         }
     };
-
-    // const run403 = async (pdfLink) => {
-    //     try {
-    //         const response = await axios({
-    //             // url: "https://about.amundi.com/files/nuxeo/dl/c44a7bb2-813b-4346-96e0-e3d695241d9b",
-    //             url: pdfLink,
-    //             method: 'GET',
-    //             responseType: 'blob', // Set responseType to blob for file downloads
-    //             headers: {
-    //                 'Accept': 'application/pdf',
-    //                 'Content-Type': 'application/pdf',  // Add this header
-    //                 'Cache-Control': 'no-cache',  // Add this header
-    //                 'Pragma': 'no-cache',  // Add this header
-    //                 'Sec-Fetch-Dest': 'empty',  // Add this header
-    //                 'Sec-Fetch-Mode': 'cors',  // Add this header
-    //             }
-    //         });
-
-    //         // Convert blob to ArrayBuffer using FileReader
-    //         const reader = new FileReader();
-    //         reader.onload = () => {
-    //             const buffer = reader.result; // ArrayBuffer containing file data
-    //             console.log(buffer); // You can now access the file data as buffer
-
-    //             const data = new Uint8Array(response.data);
-    //             const pdfDocument = pdfjs.getDocument(data).promise;
-    //             const metadata = pdfDocument.getMetadata();
-
-    //             return { pdfLink, metadata };
-
-    //         };
-    //         reader.readAsArrayBuffer(response.data);
-    //     } catch (error) {
-    //         console.error('Error downloading file:', error);
-    //         return { pdfLink, error };
-    //     }
-    // }
 
     const run403 = async (pdfLink) => {
         try {
@@ -220,7 +183,6 @@ const MetaDataOfLinks = () => {
         setFetchLoading(false)
         setFetchSuccess(true)
     }
-
 
     const convertJSONToExcel = () => {
         const workbook = new ExcelJS.Workbook();

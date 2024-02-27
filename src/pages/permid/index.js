@@ -33,8 +33,17 @@ const PermIdDetails = () => {
                 const data = await response.json();
 
                 if (data.result.organizations.entities.length > 0) {
-                    const url = data.result.organizations.entities[0].hasURL;
-                    responseArray.push({ ...item, permid: item.cin, "Company URL": url, "Errors": "" });
+                    const organizationDetails = data.result.organizations.entities[0];
+                    responseArray.push({
+                        ...item,
+                        permid: item.cin,
+                        "Company URL": organizationDetails?.hasURL || "",
+                        "Classifications": organizationDetails?.hasHoldingClassification || "",
+                        "Organization Type": organizationDetails?.orgSubtype || "",
+                        "Organization Name": organizationDetails?.organizationName || "",
+                        "Ticker": organizationDetails?.primaryTicker || "",
+                        "Errors": ""
+                    });
                 } else {
                     const errorMessage = "No organizations found for permid";
                     responseArray.push({ ...item, permid: item.cin, "Errors": errorMessage });

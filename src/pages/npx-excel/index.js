@@ -4,30 +4,32 @@ import ExcelJS from 'exceljs';
 import * as XLSX from 'xlsx';
 
 const NPXExcel = () => {
+    const [splitHeaders, setSplitHeaders] = useState("Number, Proposal Text, Proponent, Rec, Rec, Instruction, Mgmt")
+    const [rationaleText, setRationaleText] = useState("Voting Policy Rationale:")
     const [inputJson, setInputJson] = useState([])
     const [fetchLoading, setFetchLoading] = useState(false);
     const [companyData, setCompanyData] = useState(null);
 
     // single sheet
-    // const handleFileUpload = (e) => {
-    //     const file = e.target.files[0];
+    const handleFileUpload = (e) => {
+        const file = e.target.files[0];
 
-    //     if (file) {
-    //         const reader = new FileReader();
+        if (file) {
+            const reader = new FileReader();
 
-    //         reader.onload = (e) => {
-    //             const data = new Uint8Array(e.target.result);
-    //             const workbook = XLSX.read(data, { type: 'array' });
-    //             const sheetName = workbook.SheetNames[0];
-    //             const sheet = workbook.Sheets[sheetName];
-    //             const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1, raw: true, range: "A1:Z100" })
+            reader.onload = (e) => {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, { type: 'array' });
+                const sheetName = workbook.SheetNames[0];
+                const sheet = workbook.Sheets[sheetName];
+                const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1, raw: true, range: "A1:Z100" })
 
-    //             setInputJson(jsonData);
-    //         };
+                setInputJson(jsonData);
+            };
 
-    //         reader.readAsArrayBuffer(file);
-    //     }
-    // };
+            reader.readAsArrayBuffer(file);
+        }
+    };
 
 
     // All Sheets
@@ -55,30 +57,31 @@ const NPXExcel = () => {
     //     }
     // };
 
+    { }
+    // Merging All sheets
+    // const handleFileUpload = (e) => {
+    //     const file = e.target.files[0];
 
-    const handleFileUpload = (e) => {
-        const file = e.target.files[0];
+    //     if (file) {
+    //         const reader = new FileReader();
 
-        if (file) {
-            const reader = new FileReader();
+    //         reader.onload = (event) => {
+    //             const data = new Uint8Array(event.target.result);
+    //             const workbook = XLSX.read(data, { type: 'array' });
+    //             let allSheetsData = [];
 
-            reader.onload = (event) => {
-                const data = new Uint8Array(event.target.result);
-                const workbook = XLSX.read(data, { type: 'array' });
-                let allSheetsData = [];
+    //             workbook.SheetNames.forEach((sheetName) => {
+    //                 const sheet = workbook.Sheets[sheetName];
+    //                 const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1, raw: true, range: "A1:Z100" });
+    //                 allSheetsData = [...allSheetsData, ...jsonData];
+    //             });
 
-                workbook.SheetNames.forEach((sheetName) => {
-                    const sheet = workbook.Sheets[sheetName];
-                    const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1, raw: true, range: "A1:Z100" });
-                    allSheetsData = [...allSheetsData, ...jsonData];
-                });
+    //             setInputJson(allSheetsData);
+    //         };
 
-                setInputJson(allSheetsData);
-            };
-
-            reader.readAsArrayBuffer(file);
-        }
-    };
+    //         reader.readAsArrayBuffer(file);
+    //     }
+    // };
 
     // backup
     // const extractCompanyData = (myJson) => {
@@ -135,8 +138,10 @@ const NPXExcel = () => {
     // };
 
     const processTableArr = (tableArr) => {
-        // Remove the first object
         tableArr.shift();
+        // Remove the first object
+        // console.log(tableArr);
+
 
         for (let i = 0; i < tableArr.length; i++) {
             const currentObj = tableArr[i];
@@ -150,11 +155,11 @@ const NPXExcel = () => {
                 if (i > 0) {
                     const rationaleItem = Object.keys(currentObj).find(key =>
                         currentObj[key] &&
-                        currentObj[key].toString().startsWith('Voting Policy Rationale:')
+                        currentObj[key].toString().startsWith(rationaleText)
                     );
 
                     if (rationaleItem) {
-                        tableArr[i - 1]['Rationale'] = currentObj[rationaleItem].replace('Voting Policy Rationale:', '').trim();
+                        tableArr[i - 1]['Rationale'] = currentObj[rationaleItem].replace(rationaleText, '').trim();
                     } else {
                         for (const key in currentObj) {
                             if (currentObj[key]) {
@@ -244,63 +249,72 @@ const NPXExcel = () => {
     // };
 
     const extractCompanyData = (myJson) => {
-        const companyData = [];
-        const tableArr = [];
-        let currentCompany = {};
-        let isAfterSplits = false;
+        if (myJson.length > 1) {
+            const companyData = [];
+            const tableArr = [];
+            let currentCompany = {};
+            let isAfterSplits = false;
 
-        for (let i = 0; i < myJson.length; i++) {
-            const row = myJson[i];
+            for (let i = 0; i < myJson.length; i++) {
+                const row = myJson[i];
 
-            if (row.length === 1 && !row[0].includes(":")) {
-                // This is the company name
-                if (Object.keys(currentCompany).length > 0) {
-                    companyData.push(currentCompany);
-                }
-                currentCompany = {
-                    company: row[0],
-                };
-            } else if (row.length >= 1) {
-
-                if (row.toString() === ['Number', 'Proposal Text', 'Proponent', 'Rec', 'Rec', 'Instruction', 'Mgmt'].toString()) {
-                    isAfterSplits = true;
-                }
-
-                // This is company details part
-                if (isAfterSplits) {
-                    const keys = ['Proposal Number', 'Proposal Text', 'Proponent', 'Mgmt Rec', 'Voting Policy Rec', 'Vote Instruction', 'Vote Against Mgmt'];
-                    const rowData = Object.fromEntries(keys.map((key, index) => [key, row[index]]));
-                    tableArr.push(rowData);
-
-                    // Additional functionality to handle tableArr
-                    if (keys.every((key) => !rowData[key].toString().trim())) {                        // If all values are blank, merge with the previous object
-                        if (tableArr.length > 1) {
-                            tableArr[tableArr.length - 2] = { ...tableArr[tableArr.length - 2], ...rowData };
-                            tableArr.pop();
-                        }
+                if (row.length === 1 && !row[0].includes(":")) {
+                    // This is the company name
+                    if (Object.keys(currentCompany).length > 0) {
+                        companyData.push(currentCompany);
                     }
-                } else {
-                    row.forEach((item) => {
-                        if (item.includes(":")) {
-                            const [key, ...valueArray] = item.split(":").map((item) => item.trim());
-                            const value = valueArray.join(":").trim();
-                            currentCompany[key] = value;
+                    currentCompany = {
+                        company: row[0],
+                    };
+                } else if (row.length >= 1) {
+
+                    const splitsTableHeader = splitHeaders.split(", ")
+
+                    if (row.toString() === splitsTableHeader.toString()) {
+                        isAfterSplits = true;
+                    }
+
+                    // This is company details part
+                    if (isAfterSplits) {
+                        const keys = ['Proposal Number', 'Proposal Text', 'Proponent', 'Mgmt Rec', 'Voting Policy Rec', 'Vote Instruction', 'Vote Against Mgmt'];
+                        const rowData = Object.fromEntries(keys.map((key, index) => [key, row[index]]));
+                        tableArr.push(rowData);
+
+                        // Additional functionality to handle tableArr
+                        if (keys.every((key) => !rowData[key].toString().trim())) {
+                            if (tableArr.length > 1) {
+                                tableArr[tableArr.length - 2] = { ...tableArr[tableArr.length - 2], ...rowData };
+                                tableArr.pop();
+                            }
                         }
-                    });
+                    } else {
+                        row.forEach((item) => {
+                            if (item) {
+                                if (item?.toString()?.includes(":")) {
+                                    const [key, ...valueArray] = item?.toString()?.split(":").map((i) => i.trim());
+                                    const value = valueArray.join(":").trim();
+                                    currentCompany[key] = value;
+                                }
+                            }
+                        });
+                    }
                 }
             }
+
+            // Add the last company data
+            if (Object.keys(currentCompany).length > 0) {
+                companyData.push(currentCompany);
+            }
+
+            const formattedTable = processTableArr(tableArr)
+
+            const finalizedCompanyDetails = formattedTable?.map(detail => ({ ...companyData[0], ...detail }))
+
+
+            console.log(tableArr);
+
+            return finalizedCompanyDetails;
         }
-
-        // Add the last company data
-        if (Object.keys(currentCompany).length > 0) {
-            companyData.push(currentCompany);
-        }
-
-        const formattedTable = processTableArr(tableArr)
-
-        const finalizedCompanyDetails = formattedTable?.map(detail => ({ ...companyData[0], ...detail }))
-
-        return finalizedCompanyDetails;
     };
 
     const splitJSON = (json) => {
@@ -340,8 +354,7 @@ const NPXExcel = () => {
             return extractCompanyData(sepArr)
         })
 
-
-
+        console.log(finalData);
 
         return finalData
     };
@@ -416,6 +429,20 @@ const NPXExcel = () => {
     return (
         <div className={styles["npx-excel-page"]}>
             <h1>Excel in NPX format </h1>
+
+            <p>Please mention Split Headers</p>
+            <input style={{ width: "500px" }} type="text" onChange={(e) => setSplitHeaders(e.target.value)} value={splitHeaders} />
+            <br />
+            <small>Please add "," and "space"</small>
+            <br />
+            <br />
+
+            <p>Please mention Rationale text</p>
+            <input type="text" onChange={(e) => setRationaleText(e.target.value)} value={rationaleText} />
+            <br />
+            <br />
+            <br />
+
             <input type="file" onChange={handleFileUpload} />
             <br />
             <br />
