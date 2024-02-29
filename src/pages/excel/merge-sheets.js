@@ -20,7 +20,11 @@ const MergeJsons = () => {
                 workbook.SheetNames.forEach((sheetName) => {
                     const sheet = workbook.Sheets[sheetName];
                     const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1, raw: true, range: "A1:Z100" });
-                    allSheetsData = [...allSheetsData, ...jsonData];
+
+                    // Filter out rows with all empty values
+                    const nonEmptyRows = jsonData.filter(row => row.some(cellValue => cellValue !== null && cellValue !== ''));
+
+                    allSheetsData = [...allSheetsData, ...nonEmptyRows];
                 });
 
                 setInputJson(allSheetsData);
@@ -49,7 +53,6 @@ const MergeJsons = () => {
             worksheet.addRow(row);
         });
 
-        const currentDate = new Date()
         // Generate Excel file
         workbook.xlsx.writeBuffer().then((buffer) => {
             const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });

@@ -95,8 +95,6 @@ const MetaDataOfLinks = () => {
         const pubDate = moment(publicationDate, dateFormats, true);
         const crrDate = moment(currentDate, dateFormats, true);
 
-        console.log(pubDate, crrDate);
-
         if (!pubDate.isValid() || !crrDate.isValid()) {
             return "Invalid";
         }
@@ -114,6 +112,8 @@ const MetaDataOfLinks = () => {
                 const result = await fetchMetaData(item["sourceUrl"]);
                 // const result = await fetchMetaData(item["URL"]);
                 const dateInfo = result?.metadata?.info;
+
+                console.log(result?.metadata);
 
                 // const publicationDate = item["publicationDate"]
                 const createdDate = await dateInfo?.CreationDate ? parseDate(dateInfo?.CreationDate) : " "
