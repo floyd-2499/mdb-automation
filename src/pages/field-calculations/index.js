@@ -62,14 +62,14 @@ const FieldCalculations = () => {
                 const currentYear = i.toString();
                 let nextYear = (i + 1).toString();
 
-                if (!obj[currentYear] || (obj[currentYear]?.toString() !== (null || "-99" || ""))) {
+                if (!obj[currentYear] || (obj[currentYear]?.toString() !== (null || "-99" || "" || -99))) {
                     while (nextYear !== '2024' && (obj[nextYear] === '' || obj[nextYear] === null)) {
                         nextYear = (parseInt(nextYear) + 1).toString();
                     }
                     if (nextYear !== '2024' && obj[nextYear] !== '' && obj[nextYear] !== null) {
                         const difference = parseFloat(obj[nextYear]) - parseFloat(obj[currentYear]);
-                        const percentage = (difference / parseFloat(obj[currentYear])) * 100;
-                        obj[`${currentYear}-${nextYear}`] = percentage !== "NaN" ? percentage.toFixed(2) : "";
+                        const percentage = ((difference / parseFloat(obj[currentYear])) * 100) || "";
+                        obj[`${currentYear}-${nextYear}`] = percentage && (percentage !== "NaN" ? percentage.toFixed(2) : "");
                     }
                 }
             }
