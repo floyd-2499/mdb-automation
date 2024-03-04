@@ -34,6 +34,48 @@ const MergeJsons = () => {
         }
     };
 
+
+    // This is for if there are headers in all sheets
+    // const convertExcelToJson = async (data) => {
+    //     const workbook = new ExcelJS.Workbook();
+    //     await workbook.xlsx.load(data);
+
+    //     const jsonData = [];
+
+    //     workbook.eachSheet((sheet, sheetId) => {
+    //         const header = sheet.getRow(1).values;
+
+    //         sheet.eachRow((row, rowNumber) => {
+    //             if (rowNumber !== 1) {
+    //                 const rowData = {};
+    //                 row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
+    //                     rowData[header[colNumber]] = cell?.value !== undefined ? cell.value : null;
+    //                 });
+    //                 jsonData.push(rowData);
+    //             }
+    //         });
+    //     });
+
+    //     return jsonData;
+    // };
+
+    // const handleFileUpload = async (event) => {
+    //     const file = event.target.files[0];
+    //     const reader = new FileReader();
+
+    //     reader.onload = async (e) => {
+    //         const data = e.target.result;
+    //         let jsonData = await convertExcelToJson(data);
+
+    //         // Remove blank rows
+    //         jsonData = jsonData.filter(row => Object.values(row).some(cellValue => cellValue !== null && cellValue !== ''));
+
+    //         setInputJson(jsonData);
+    //     };
+
+    //     reader.readAsArrayBuffer(file);
+    // };
+
     console.log(inputJson);
 
     const convertJSONToExcel = () => {
@@ -41,7 +83,7 @@ const MergeJsons = () => {
         const worksheet = workbook.addWorksheet('Sheet 1');
 
         // Add headers
-        const headers = Object?.keys(inputJson[0]);
+        const headers = [...new Set(inputJson.flatMap(obj => Object.keys(obj)))];
         worksheet.addRow(headers);
 
         // Add data rows

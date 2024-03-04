@@ -11,25 +11,25 @@ const NPXExcel = () => {
     const [companyData, setCompanyData] = useState(null);
 
     // single sheet
-    const handleFileUpload = (e) => {
-        const file = e.target.files[0];
+    // const handleFileUpload = (e) => {
+    //     const file = e.target.files[0];
 
-        if (file) {
-            const reader = new FileReader();
+    //     if (file) {
+    //         const reader = new FileReader();
 
-            reader.onload = (e) => {
-                const data = new Uint8Array(e.target.result);
-                const workbook = XLSX.read(data, { type: 'array' });
-                const sheetName = workbook.SheetNames[0];
-                const sheet = workbook.Sheets[sheetName];
-                const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1, raw: true, range: "A1:Z100" })
+    //         reader.onload = (e) => {
+    //             const data = new Uint8Array(e.target.result);
+    //             const workbook = XLSX.read(data, { type: 'array' });
+    //             const sheetName = workbook.SheetNames[0];
+    //             const sheet = workbook.Sheets[sheetName];
+    //             const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1, raw: true, range: "A1:Z100" })
 
-                setInputJson(jsonData);
-            };
+    //             setInputJson(jsonData);
+    //         };
 
-            reader.readAsArrayBuffer(file);
-        }
-    };
+    //         reader.readAsArrayBuffer(file);
+    //     }
+    // };
 
 
     // All Sheets
@@ -57,35 +57,33 @@ const NPXExcel = () => {
     //     }
     // };
 
-    { }
     // Merging All sheets
-    // const handleFileUpload = (e) => {
-    //     const file = e.target.files[0];
+    const handleFileUpload = (e) => {
+        const file = e.target.files[0];
 
-    //     if (file) {
-    //         const reader = new FileReader();
+        if (file) {
+            const reader = new FileReader();
 
-    //         reader.onload = (event) => {
-    //             const data = new Uint8Array(event.target.result);
-    //             const workbook = XLSX.read(data, { type: 'array' });
-    //             let allSheetsData = [];
+            reader.onload = (event) => {
+                const data = new Uint8Array(event.target.result);
+                const workbook = XLSX.read(data, { type: 'array' });
+                let allSheetsData = [];
 
-    //             workbook.SheetNames.forEach((sheetName) => {
-    //                 const sheet = workbook.Sheets[sheetName];
-    //                 const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1, raw: true, range: "A1:Z100" });
-    //                 allSheetsData = [...allSheetsData, ...jsonData];
-    //             });
+                workbook.SheetNames.forEach((sheetName) => {
+                    const sheet = workbook.Sheets[sheetName];
+                    const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1, raw: true, range: "A1:Z100" });
+                    allSheetsData = [...allSheetsData, ...jsonData];
+                });
 
-    //             setInputJson(allSheetsData);
-    //         };
+                setInputJson(allSheetsData);
+            };
 
-    //         reader.readAsArrayBuffer(file);
-    //     }
-    // };
+            reader.readAsArrayBuffer(file);
+        }
+    };
 
     // backup
     // const extractCompanyData = (myJson) => {
-    //     console.log(myJson);
     //     const companyData = [];
     //     let currentCompany = {};
 
@@ -123,9 +121,6 @@ const NPXExcel = () => {
     //                 // Skip the loop when encountering these specific arrays inside the else part
     //                 continue;
     //             }
-
-    //             // This is company details part
-    //             console.log(row);
     //         }
     //     }
 
@@ -139,9 +134,6 @@ const NPXExcel = () => {
 
     const processTableArr = (tableArr) => {
         tableArr.shift();
-        // Remove the first object
-        // console.log(tableArr);
-
 
         for (let i = 0; i < tableArr.length; i++) {
             const currentObj = tableArr[i];
@@ -307,11 +299,7 @@ const NPXExcel = () => {
             }
 
             const formattedTable = processTableArr(tableArr)
-
             const finalizedCompanyDetails = formattedTable?.map(detail => ({ ...companyData[0], ...detail }))
-
-
-            console.log(tableArr);
 
             return finalizedCompanyDetails;
         }
@@ -353,8 +341,6 @@ const NPXExcel = () => {
         const finalData = resultArrays?.map((sepArr) => {
             return extractCompanyData(sepArr)
         })
-
-        console.log(finalData);
 
         return finalData
     };
@@ -423,8 +409,6 @@ const NPXExcel = () => {
             setFetchLoading(false)
         }
     }, [inputJson])
-
-    console.log(companyData);
 
     return (
         <div className={styles["npx-excel-page"]}>
