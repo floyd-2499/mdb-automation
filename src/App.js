@@ -1,20 +1,20 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-
-import LayoutMain from "./view/layout/index";
-import uris from "./config/uris/uris";
-import NPXExcel from "./pages/npx-excel";
 import { Provider } from "react-redux";
-import reduxStore from "./config/store/redux-store";
-import DetectLanguages from "./pages/detect-language";
-import Excel from "./pages/excel";
-import NpxToJson from "./pages/npx-json";
+
 import '../src/view/layout/styles/global/_styles.scss'
-import PDFReader from "./pages/validate-links";
+import reduxStore from "./config/store/redux-store";
+import uris from "./config/uris/uris";
+import PermIdDetails from "./pages/permid";
 import Home from "./pages/home";
+import Excel from "./pages/excel";
+import NPXExcelMain from "./pages/npx-excel";
+import DetectLanguages from "./pages/detect-language";
+import NpxToJson from "./pages/npx-json";
+import PDFReader from "./pages/validate-links";
 import ColorExcel from "./pages/color-validation";
 import FieldCalculations from "./pages/field-calculations";
-import PermIdDetails from "./pages/permid";
+import LayoutMain from "./view/layout/index";
 
 function App() {
   return (
@@ -23,7 +23,7 @@ function App() {
         <LayoutMain>
           <Routes>
             <Route path={uris.home} element={<Home />} />
-            <Route path={uris.npxExcel} element={<NPXExcel />} />
+            <Route path={uris.npxExcel} element={<NPXExcelMain />} />
             <Route path={uris.language} element={<DetectLanguages />} />
             <Route path={uris.excel} element={<Excel />} />
             <Route path={uris.npxToJson} element={<NpxToJson />} />

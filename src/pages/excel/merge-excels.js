@@ -25,7 +25,6 @@ export const MultiFileJson = ({ onFileUpload }) => {
                 // Flatten the array of JSONs if there are multiple files
                 const flattenedData = result.flat();
                 onFileUpload(flattenedData);
-                onFileUpload(flattenedData);
             })
             .catch((error) => {
                 console.error('Error reading Excel files:', error);

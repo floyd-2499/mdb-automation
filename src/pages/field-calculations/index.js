@@ -25,7 +25,9 @@ const FieldCalculations = () => {
             uniqueData.forEach((uniqueItem) => {
                 if (
                     uniqueItem["provider_id"] === item["provider_id"] &&
-                    uniqueItem["metric"] === item["metric"]
+                    uniqueItem["metric"] === item["metric"] &&
+                    uniqueItem["companyName"] === item["companyName"]
+
                 ) {
                     found = true;
 
@@ -39,6 +41,7 @@ const FieldCalculations = () => {
                 const newItem = {
                     "provider_id": item["provider_id"],
                     "metric": item["metric"],
+                    ...item
                 };
 
                 if (item["metric_year"]) {
@@ -48,7 +51,7 @@ const FieldCalculations = () => {
             }
         });
 
-        const headers = ['provider_id', 'metric', '2016', '2017', '2018', '2019', '2020', '2021', '2022', "2023"]
+        const headers = ['provider_id', 'metric', "companyName", '2018', '2019', '2020', '2021', '2022', "2023"]
         const arrayWithAllKeys = uniqueData.map(item => {
             const newObj = {};
             headers.forEach(key => {
@@ -104,7 +107,7 @@ const FieldCalculations = () => {
 
         // Sheet 2
         const headers2 = [...new Set(calculationsData.flatMap(obj => Object.keys(obj)))];
-        const headers = ['provider_id', 'metric', '2016', '2017', '2018', '2019', '2020', '2021', '2022', "2023"]
+        const headers = ['provider_id', 'metric', "companyName", '2018', '2019', '2020', '2021', '2022', "2023"]
         workSheet2.addRow(headers2);
         calculationsData.forEach((dataRow) => {
             const row = [];
@@ -113,7 +116,7 @@ const FieldCalculations = () => {
             headers2.forEach((header) => {
                 if (!headers.includes(header)) {
                     const value = parseFloat(dataRow[header]);
-                    if (!isNaN(value) && (value > 100 || value < -100)) {
+                    if (!isNaN(value) && ((value > 50 && value < 100) || (value < -50 && value > -100))) {
                         colorProviderId = true;
                     }
                 }
@@ -122,7 +125,7 @@ const FieldCalculations = () => {
 
             const rowAdded = workSheet2.addRow(row);
             if (colorProviderId) {
-                rowAdded.getCell('I').fill = {
+                rowAdded.getCell('G').fill = {
                     type: 'pattern',
                     pattern: 'solid',
                     fgColor: { argb: 'FFFF0000' } // Red color for 'provider_id' cell
@@ -143,7 +146,7 @@ const FieldCalculations = () => {
         });
     };
 
-    // console.log(finalizedJson);
+    console.log(finalizedJson);
     return (
         <div className="page">
             <div>
@@ -159,10 +162,12 @@ const FieldCalculations = () => {
                 <br />
                 <br />
                 <br />
-                <div>
-                    <h1>JSON to Excel Converter</h1>
-                    <button onClick={convertJSONToExcel}>Download Excel</button>
-                </div>
+                {finalizedJson?.length > 0 && (
+                    <div>
+                        <h1>JSON to Excel Converter</h1>
+                        <button onClick={convertJSONToExcel}>Download Excel</button>
+                    </div>
+                )}
             </div>
         </div>
     )

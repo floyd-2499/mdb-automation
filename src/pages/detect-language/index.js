@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import PDFLanguageFromLinks from "./excel-link";
 import styles from "./styles.module.scss"
-import LanguageDetectorModel2 from "./excel-link-model-2";
+// import LanguageDetectorModel2 from "./excel-link-model-2";
+import DetectLanguagesModel2 from "./auto-lang-detect";
 import MetaDataOfLinks from "./pdf-metadata";
 import MetaDataAutomated from "../meta-data";
 
@@ -15,13 +16,13 @@ const tabsData = [
         ref: "metadata"
     },
     {
-        name: "Detect Languages",
+        name: "Detect Language",
         ref: "model-1"
     },
-    // {
-    //     name: "Model - Language Detect",
-    //     ref: "model-2"
-    // },
+    {
+        name: "Language Detection - 2.0",
+        ref: "model-2"
+    },
 ]
 
 const DetectLanguages = () => {
@@ -52,8 +53,12 @@ const DetectLanguages = () => {
                 <PDFLanguageFromLinks />
             )}
 
-            {tab === "model-2" && (
+            {/* {tab === "model-2" && (
                 <LanguageDetectorModel2 />
+            )} */}
+
+            {tab === "model-2" && (
+                <DetectLanguagesModel2 />
             )}
         </div>
     )
