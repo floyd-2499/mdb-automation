@@ -31,12 +31,12 @@ const Header = () => {
                 {/* <a href={uris.fieldMapper} className={styles["header-nav"]}>
                     Client Mapping
                 </a> */}
-                <a href={uris.fieldCalculations} className={styles["header-nav"]}>
+                {/* <a href={uris.fieldCalculations} className={styles["header-nav"]}>
                     %-Calculations
-                </a>
-                <a href={uris.colorExcel} className={styles["header-nav"]}>
+                </a> */}
+                {/* <a href={uris.colorExcel} className={styles["header-nav"]}>
                     Color-Validate
-                </a>
+                </a> */}
                 <a href={uris.validateLinks} className={styles["header-nav"]}>
                     Validate Links
                 </a>

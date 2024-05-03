@@ -1,11 +1,12 @@
 import React from "react";
 import uris from "../../../config/uris/uris";
 import styles from "./styles.module.scss";
+import Logo from "../../assets/Logo.svg"
 
 const LogoMain = () => {
     return (
         <a className={styles["logo-wrapper"]} href={uris.home}>
-            <svg
+            {/* <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="100"
                 height="33"
@@ -81,7 +82,8 @@ const LogoMain = () => {
                         <rect width="100" height="33" fill="white" />
                     </clipPath>
                 </defs>
-            </svg>
+            </svg> */}
+            <img src={Logo} alt="ESGDS Logo" />
         </a>
     );
 };
