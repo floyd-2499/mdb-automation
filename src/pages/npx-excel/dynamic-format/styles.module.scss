@@ -1,0 +1,37 @@
+.dynamic-format-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+
+    .important-text {
+        color: red;
+        margin-top: -10px;
+    }
+
+    .options-container {
+        .input-wrapper {
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            flex-direction: column;
+            gap: 5px;
+
+            label {
+                font-size: 14px;
+
+                .important-text {
+                    font-weight: 600;
+                    margin-left: 5px;
+                }
+            }
+
+            input {
+                padding: 5px 10px;
+                outline: none;
+                border: 1px solid #4e4e4e;
+                border-radius: 5px;
+            }
+        }
+    }
+}

@@ -204,7 +204,7 @@ const Excel = () => {
             <h1>EXCEL Helper</h1>
             <div className={styles['tabs-section']}>
                 {tabsData.map(tabItem => (
-                    <div key={tabItem.name} className={tab === tabItem.ref && styles["active"]} onClick={() => setTab(tabItem.ref)}>{tabItem.name}</div>
+                    <div key={tabItem.name} className={tab === tabItem.ref ? styles["active"] : ""} onClick={() => setTab(tabItem.ref)}>{tabItem.name}</div>
                 ))}
             </div>
             <br />
@@ -219,10 +219,10 @@ const Excel = () => {
                 <div className={styles['page-contents']}>
                     <h3>Convert Excel to JSON</h3>
                     <small className={styles['input-label']}>Sheet Number:</small>
-                    <input type="number" onChange={(e) => setSheetNumber(e.target.value)} className={!sheetNumber && styles['highlight-input']} />
+                    <input type="number" onChange={(e) => setSheetNumber(e.target.value)} className={!sheetNumber ? styles['highlight-input'] : ""} />
                     <br />
                     <br />
-                    <div className={!sheetNumber && styles['disable-upload']}>
+                    <div className={!sheetNumber ? styles['disable-upload'] : ""}>
                         <ExcelFileUploader onFileUpload={setJsonData} sheetKey={sheetNumber} />
                     </div>
                     {jsonData?.length > 0 && <h3 className={styles['success-text']}>Data Converted to JSON Successfully!!</h3>}

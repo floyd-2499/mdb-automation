@@ -15,6 +15,7 @@ import PDFReader from "./pages/validate-links";
 import ColorExcel from "./pages/color-validation";
 import FieldCalculations from "./pages/field-calculations";
 import LayoutMain from "./view/layout/index";
+import PdfCompressor from "./pages/pdf-helper";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route path={uris.colorExcel} element={<ColorExcel />} />
             <Route path={uris.fieldCalculations} element={<FieldCalculations />} />
             <Route path={uris.permid} element={<PermIdDetails />} />
+            <Route path={uris.pdfCompress} element={<PdfCompressor />} />
           </Routes>
         </LayoutMain>
       </Router>

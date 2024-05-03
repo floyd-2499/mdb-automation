@@ -20,7 +20,7 @@ const NpxToJson = () => {
                 {formatOptions.map((formatDetail) => (
                     <h4
                         key={formatDetail.key}
-                        className={`${styles["form-options"]} ${format?.name === formatDetail.name && styles["active-format"]}`}
+                        className={`${styles["form-options"]} ${format?.name === formatDetail.name ? styles["active-format"] : ""}`}
                         onClick={() => setFormat(formatDetail)}
                     >
                         {formatDetail.name}

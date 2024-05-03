@@ -44,7 +44,8 @@ const MetaDataOfLinks = () => {
             const pdfDocument = await pdfjs.getDocument(data).promise;
             const metadata = await pdfDocument.getMetadata();
 
-            console.log({ pdfLink, metadata });
+            // console.log({ pdfLink, metadata });
+            console.log(response, "from 403");
 
             return { pdfLink, metadata };
         } catch (error) {
@@ -60,6 +61,8 @@ const MetaDataOfLinks = () => {
 
             const pdfDocument = await pdfjs.getDocument(data).promise;
             const metadata = await pdfDocument.getMetadata();
+
+            console.log(response);
 
             return { pdfLink, metadata };
         } catch (error) {
@@ -113,7 +116,7 @@ const MetaDataOfLinks = () => {
                 // const result = await fetchMetaData(item["URL"]);
                 const dateInfo = result?.metadata?.info;
 
-                console.log(result?.metadata);
+                // console.log(result?.metadata);
 
                 // const publicationDate = item["publicationDate"]
                 const createdDate = await dateInfo?.CreationDate ? parseDate(dateInfo?.CreationDate) : " "

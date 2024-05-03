@@ -5,6 +5,7 @@ import styles from "./styles.module.scss"
 import DetectLanguagesModel2 from "./auto-lang-detect";
 import MetaDataOfLinks from "./pdf-metadata";
 import MetaDataAutomated from "../meta-data";
+import ExcelRequestViewer from "./curl-v";
 
 const tabsData = [
     {
@@ -23,10 +24,14 @@ const tabsData = [
         name: "Language Detection - 2.0",
         ref: "model-2"
     },
+    {
+        name: "Last Modified Url",
+        ref: "curl-v"
+    },
 ]
 
 const DetectLanguages = () => {
-    const [tab, setTab] = useState(tabsData[1]?.ref)
+    const [tab, setTab] = useState(tabsData[4]?.ref)
 
 
     return (
@@ -35,7 +40,7 @@ const DetectLanguages = () => {
 
             <div className={styles['tabs-section']}>
                 {tabsData.map(tabItem => (
-                    <div key={tabItem.name} className={tab === tabItem.ref && styles["active"]} onClick={() => setTab(tabItem.ref)}>{tabItem.name}</div>
+                    <div key={tabItem.name} className={tab === tabItem.ref ? styles["active"] : ""} onClick={() => setTab(tabItem.ref)}>{tabItem.name}</div>
                 ))}
             </div>
 
@@ -59,6 +64,10 @@ const DetectLanguages = () => {
 
             {tab === "model-2" && (
                 <DetectLanguagesModel2 />
+            )}
+
+            {tab === "curl-v" && (
+                <ExcelRequestViewer />
             )}
         </div>
     )

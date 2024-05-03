@@ -54,7 +54,8 @@ const MetaDataAutomated = () => {
             const pdfDocument = await pdfjs.getDocument(data).promise;
             const metadata = await pdfDocument.getMetadata();
 
-            console.log({ pdfLink, metadata });
+            // console.log({ pdfLink, metadata });
+            console.log(response, " - From 403");
 
             return { pdfLink, metadata };
         } catch (error) {
@@ -70,6 +71,8 @@ const MetaDataAutomated = () => {
 
             const pdfDocument = await pdfjs.getDocument(data).promise;
             const metadata = await pdfDocument.getMetadata();
+
+            console.log(response);
 
             return { pdfLink, metadata };
         } catch (error) {
@@ -185,7 +188,7 @@ const MetaDataAutomated = () => {
                 const startTime = new Date();
                 await batchwiseData.reduce(async (previousPromise, batch, index) => {
                     await previousPromise; // Wait for the previous batch to complete
-                    console.log(batch);
+                    // console.log(batch);
                     await handleFindMetaData(batch);
                     console.log(`Batch ${index} Done`);
                 }, Promise.resolve());
