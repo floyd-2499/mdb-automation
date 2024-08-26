@@ -85,7 +85,7 @@ const FileLinks = () => {
             {tab === "download-files" && (
                 <div className={styles['page-contents']}>
                     <h3>Convert Excel to JSON</h3>
-                    <ExcelFileUploader onFileUpload={setJsonFile} sheetKey={1} />
+                    <ExcelFileUploader onFileUpload={setJsonFile} />
                 </div>
             )}
             <br />
