@@ -6,7 +6,7 @@ import Logo from "../../assets/Logo.svg"
 const LogoMain = () => {
     return (
         <a className={styles["logo-wrapper"]} href={uris.home}>
-            {/* <svg
+            <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="100"
                 height="33"
@@ -82,8 +82,8 @@ const LogoMain = () => {
                         <rect width="100" height="33" fill="white" />
                     </clipPath>
                 </defs>
-            </svg> */}
-            <img src={Logo} alt="ESGDS Logo" />
+            </svg>
+            {/* <img src={Logo} alt="ESGDS Logo" /> */}
         </a>
     );
 };

@@ -1,0 +1,43 @@
+.files-page {
+    min-height: 80vh;
+    padding: 30px;
+    box-sizing: border-box;
+
+    .input-label {
+        margin-right: 10px;
+    }
+
+    .highlight-input {
+        border: 1px solid red;
+    }
+
+    .disable-upload {
+        pointer-events: none;
+        cursor: not-allowed;
+        background-color: rgb(250, 228, 228);
+        width: fit-content;
+    }
+
+    .success-text {
+        color: green;
+    }
+
+    .tabs-section {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-direction: row;
+        gap: 20px;
+
+        div {
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .active {
+            color: green;
+            border-bottom: 1px solid green;
+        }
+    }
+}

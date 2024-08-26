@@ -3,6 +3,25 @@ import LogoMain from "../../../view/widgets/logo";
 import uris from "../../../config/uris/uris";
 import styles from "./styles.module.scss";
 
+const navItems = [
+    { href: uris.home, label: "Home", isActive: true },
+    { href: uris.fileLinks, label: "File - Links", isActive: true },
+    { href: uris.excel, label: "Excel - Helper", isActive: true },
+    { href: uris.permid, label: "PermId API", isActive: true },
+    { href: uris.multiExcel, label: "Multi - Excel", isActive: false },
+    { href: uris.metaData, label: "Meta Data", isActive: false },
+    { href: uris.language, label: "MetaData & Language", isActive: true },
+    { href: uris.fieldMapper, label: "Client Mapping", isActive: false },
+    { href: uris.fieldCalculations, label: "%-Calculations", isActive: false },
+    { href: uris.colorExcel, label: "Color-Validate", isActive: false },
+    { href: uris.validateLinks, label: "Validate Links", isActive: true },
+    { href: uris.npxExcel, label: "NPX-EXCEL", isActive: false },
+    { href: uris.npxToJson, label: "NPX-JSON", isActive: false },
+    { href: uris.products, label: "Products", isActive: false },
+    { href: uris.charts, label: "Charts", isActive: false },
+];
+
+
 const Header = () => {
     return (
         <div className={`${styles['header-container']} ${styles['dark-theme']}`}>
@@ -10,50 +29,15 @@ const Header = () => {
                 <LogoMain />
             </div>
             <div className={styles["nav-container"]}>
-                <a href={uris.home} className={styles["header-nav"]}>
-                    Home
-                </a>
-                <a href={uris.excel} className={styles["header-nav"]}>
-                    Excel - Helper
-                </a>
-                <a href={uris.permid} className={styles["header-nav"]}>
-                    PermId API
-                </a>
-                {/* <a href={uris.multiExcel} className={styles["header-nav"]}>
-                    Multi -Excel
-                </a> */}
-                {/* <a href={uris.metaData} className={styles["header-nav"]}>
-                    Meta Data
-                </a> */}
-                <a href={uris.language} className={styles["header-nav"]}>
-                    MetaData & Language
-                </a>
-                {/* <a href={uris.fieldMapper} className={styles["header-nav"]}>
-                    Client Mapping
-                </a> */}
-                {/* <a href={uris.fieldCalculations} className={styles["header-nav"]}>
-                    %-Calculations
-                </a> */}
-                {/* <a href={uris.colorExcel} className={styles["header-nav"]}>
-                    Color-Validate
-                </a> */}
-                <a href={uris.validateLinks} className={styles["header-nav"]}>
-                    Validate Links
-                </a>
-                <a href={uris.npxExcel} className={styles["header-nav"]}>
-                    NPX-EXCEL
-                </a>
-                <a href={uris.npxToJson} className={styles["header-nav"]}>
-                    NPX-JSON
-                </a>
-
-
-                {/* <a href={uris.products} className={styles["header-nav"]}>
-                    Products
-                </a> */}
-                {/* <a href={uris.charts} className={styles["header-nav"]}>
-                    Charts
-                </a> */}
+                {navItems?.map((item) => {
+                    if (item?.isActive) {
+                        return (
+                            <a key={item?.href} href={item?.href} className={styles["header-nav"]}>
+                                {item?.label}
+                            </a>
+                        )
+                    }
+                })}
                 {/* <div className={cn(styles["nav-icons-section"], styles["nav-container"])}>
                     <a href={uris.cart} className={cn(styles['header-nav'], styles.cart)}>
                         Cart

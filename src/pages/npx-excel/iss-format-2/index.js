@@ -6,6 +6,7 @@ import * as XLSX from 'xlsx';
 const ignorableRows = ['Vote Summary Report', 'Date range covered: ',]
 const headersToSplit = "Number, Proposal Text, Mgmt Rec, Instruction"
 const rationaleSplitText = "Blended Rationale: "
+const outputHeaders = ["Company Name", 'Meeting Date', 'Country', 'Meeting Type', 'Ticker', 'Number', 'Proposal Text', 'Mgmt Rec', 'Instruction', "Blended Rationale", "undefined"]
 
 const ISSFormat2 = () => {
     const [splitHeaders, setSplitHeaders] = useState(headersToSplit)
@@ -105,9 +106,9 @@ const ISSFormat2 = () => {
             }
 
             if (votingDetails?.length > 0) {
-                const keys = splitHeaders?.split(", ");
                 const formattedDetails = [];
                 let currentDetail = {};
+                const keys = splitHeaders?.split(", ");
 
                 votingDetails.forEach(row => {
                     let formattedRow = {};
@@ -127,6 +128,7 @@ const ISSFormat2 = () => {
                                 currentDetail['Proposal Text'] = splitText[0];
                                 currentDetail['Blended Rationale'] = splitText[1];
                             }
+                            currentDetail = { ...currentDetail, ...additionalInfo }
                             formattedDetails.push(currentDetail);
                         }
                         // Reset the currentDetail to the new formattedRow
@@ -141,41 +143,23 @@ const ISSFormat2 = () => {
                         currentDetail['Proposal Text'] = splitText[0];
                         currentDetail['Blended Rationale'] = splitText[1];
                     }
+
+                    currentDetail = { ...currentDetail, ...additionalInfo }
                     formattedDetails.push(currentDetail);
                 }
-                additionalInfo["Company Details"] = formattedDetails
+                return formattedDetails
             }
-
-            return additionalInfo
         }
 
         return null
     }
 
-    const structuredData = (formattedSet) => {
-        if (formattedSet.length > 0) {
-            const commonCompanyDetails = formattedSet[0]; // Assuming the first item contains the common company details
-            const formattedCompanyDetails = formattedSet.map(companyDetails => {
-                return {
-                    ...commonCompanyDetails,
-                    ...companyDetails
-                };
-            });
-            return formattedCompanyDetails;
-        }
-        return [];
-    }
-
-
     const formatExcel = () => {
         const splits = groupSplit()
         const formattedSet = splits.map((company) => formatCompany(company)).filter(detail => detail !== null)
+        const flattenedSet = formattedSet.flat()
 
-        const structuredSet = structuredData(formattedSet);
-
-        console.log(structuredSet);
-
-        setCompanyData(formattedSet)
+        setCompanyData(flattenedSet)
     }
 
     const convertJSONToExcel = (data) => {
@@ -185,12 +169,14 @@ const ISSFormat2 = () => {
         // Add headers
         // const headers = Object?.keys(data[0]);
         const headers = [...new Set(data.flatMap(obj => Object.keys(obj)))];
-        worksheet.addRow(headers);
+        console.log(headers);
+
+        worksheet.addRow(outputHeaders);
 
         // Add data rows
         data.forEach((dataRow) => {
             const row = [];
-            headers.forEach((header) => {
+            outputHeaders.forEach((header) => {
                 row.push(dataRow[header]);
             });
             worksheet.addRow(row);

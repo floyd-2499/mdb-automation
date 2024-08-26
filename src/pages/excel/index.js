@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import styles from './styles.module.scss'
 import { ExcelFileUploader } from '../validate-links/index'
 import ExcelJS from 'exceljs';
@@ -197,7 +198,6 @@ const Excel = () => {
         link.click();
         document.body.removeChild(link);
     };
-
 
     return (
         <div className={styles['excel-page']}>
