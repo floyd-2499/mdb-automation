@@ -22,55 +22,38 @@ const WebpageToPDF = () => {
         }
     }
 
+    // HTML
     useEffect(() => {
         if (jsonFile && jsonFile.length > 0) {
             const downloadFiles = async () => {
                 setStatus("loading");
                 const stats = [];
 
-                // Loop through the jsonFile array and download each URL as PDF
                 for (const file of jsonFile) {
                     if (file.URL) {
                         try {
-                            const iframe = document.createElement('iframe');
-                            iframe.style.display = 'none';
-                            iframe.src = file.URL;
-                            document.body.appendChild(iframe);
+                            const response = await fetch(file.URL);
+                            if (!response.ok) throw new Error(`Failed to fetch ${file.URL}`);
 
-                            await new Promise((resolve, reject) => {
-                                iframe.onload = () => {
-                                    const content = iframe.contentWindow.document.body;
+                            const htmlContent = await response.text();
 
-                                    // Generate and download the PDF
-                                    html2pdf().from(content).set({
-                                        margin: 1,
-                                        filename: `${file.URL.split('/').pop()}.pdf`,
-                                        html2canvas: { scale: 2 },
-                                        jsPDF: { orientation: 'portrait' },
-                                    }).save().then(() => {
-                                        // If successful, add to stats and resolve
-                                        stats.push({ url: file.URL, status: 'success' });
-                                        document.body.removeChild(iframe);
-                                        resolve();
-                                    }).catch(() => {
-                                        stats.push({ url: file.URL, status: 'failed' });
-                                        reject();
-                                    });
-                                };
+                            // Create a blob from the HTML content and download it as a .html file
+                            const blob = new Blob([htmlContent], { type: 'text/html' });
+                            const url = window.URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.download = `${file.URL.split('/').pop()}.html`; // Save as .html file
+                            a.click();
+                            window.URL.revokeObjectURL(url); // Free up memory by revoking the object URL
 
-                                iframe.onerror = () => {
-                                    stats.push({ url: file.URL, status: 'failed' });
-                                    reject();
-                                };
-                            });
+                            stats.push({ url: file.URL, status: 'success' });
                         } catch (error) {
-                            console.error(`Error downloading ${file.URL}: `, error);
+                            console.error(`Error downloading ${file.URL}:`, error);
                             stats.push({ url: file.URL, status: 'failed' });
                         }
                     }
                 }
 
-                // Update the download statistics
                 setDownloadStats(stats);
                 setStatus("completed");
             };
@@ -79,13 +62,44 @@ const WebpageToPDF = () => {
         }
     }, [jsonFile]);
 
-    // useEffect(() => {
-    //     if (jsonFile) {
-    //         const downloadFiles = async () => {
-    //             setStatus("loading")
-    //             console.log(jsonFile);
 
-    //             setStatus("completed")
+    // PDF
+    // useEffect(() => {
+    //     if (jsonFile && jsonFile.length > 0) {
+    //         const downloadFiles = async () => {
+    //             setStatus("loading");
+    //             const stats = [];
+
+    //             for (const file of jsonFile) {
+    //                 if (file.URL) {
+    //                     try {
+    //                         const response = await fetch(file.URL);
+    //                         if (!response.ok) throw new Error(`Failed to fetch ${file.URL}`);
+
+    //                         const htmlContent = await response.text();
+    //                         const parser = new DOMParser();
+    //                         const doc = parser.parseFromString(htmlContent, 'text/html');
+    //                         const content = doc.body;
+
+    //                         // Generate the PDF using html2pdf
+    //                         await html2pdf().from(content).set({
+    //                             margin: 1,
+    //                             filename: `${file.URL.split('/').pop()}.pdf`,
+    //                             html2canvas: { scale: 2 },
+    //                             jsPDF: { orientation: 'portrait' },
+    //                             wait: 5000, // Optional: Add delay to wait for full page load
+    //                         }).save();
+
+    //                         stats.push({ url: file.URL, status: 'success' });
+    //                     } catch (error) {
+    //                         console.error(`Error downloading ${file.URL}:`, error);
+    //                         stats.push({ url: file.URL, status: 'failed' });
+    //                     }
+    //                 }
+    //             }
+
+    //             setDownloadStats(stats);
+    //             setStatus("completed");
     //         };
 
     //         downloadFiles();
