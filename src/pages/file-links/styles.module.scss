@@ -29,7 +29,7 @@
         flex-direction: row;
         gap: 20px;
 
-        div {
+        .tab-item {
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
@@ -38,6 +38,27 @@
         .active {
             color: green;
             border-bottom: 1px solid green;
+        }
+    }
+
+    .tab-contents {
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        flex-direction: column;
+        gap: 5px;
+
+        .upload-section {
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            flex-direction: column;
+            gap: 5px;
+
+            .upload-warning {
+                color: red;
+                font-weight: 600;
+            }
         }
     }
 }

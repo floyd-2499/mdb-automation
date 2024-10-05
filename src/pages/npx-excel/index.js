@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+
 import styles from "./styles.module.scss"
-import ISSFormatMain from "./iss-format-main";
 import Format1 from "./format1";
-import DynamicFormat from "./dynamic-format";
 import Format2 from "./format2";
+import Format3 from "./format3";
+import ISSFormatMain from "./iss-format-main";
+import DynamicFormat from "./dynamic-format";
 import ISSFormat2 from "./iss-format-2";
 
 const tabsData = [
@@ -24,13 +26,17 @@ const tabsData = [
         ref: "format-2"
     },
     {
+        name: "Format 3 (Devi)",
+        ref: "format-3"
+    },
+    {
         name: "Dynamic Format",
         ref: "dynamic"
     },
 ]
 
 const NPXExcelMain = () => {
-    const [tab, setTab] = useState(tabsData[1]?.ref)
+    const [tab, setTab] = useState(tabsData[4]?.ref)
 
     return (
         <div className="page-main">
@@ -57,6 +63,10 @@ const NPXExcelMain = () => {
 
             {tab === "format-2" && (
                 <Format2 />
+            )}
+
+            {tab === "format-3" && (
+                <Format3 />
             )}
 
             {tab === "dynamic" && (

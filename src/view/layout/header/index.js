@@ -4,7 +4,7 @@ import uris from "../../../config/uris/uris";
 import styles from "./styles.module.scss";
 
 const navItems = [
-    { href: uris.home, label: "Home", isActive: true },
+    { href: uris.home, label: "Home", isActive: false },
     { href: uris.fileLinks, label: "File - Links", isActive: true },
     { href: uris.excel, label: "Excel - Helper", isActive: true },
     { href: uris.permid, label: "PermId API", isActive: true },

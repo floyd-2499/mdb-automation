@@ -1,0 +1,35 @@
+.format-1-container {
+    .button {
+        padding: 5px 10px;
+        background-color: #fff;
+        border: 1px solid #f65b5b;
+        border-radius: 5px;
+        font-size: 14px;
+        color: #444444;
+        cursor: pointer;
+    }
+
+    .input-wrapper {
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        flex-direction: column;
+        gap: 5px;
+
+        label {
+            font-size: 14px;
+
+            .important-text {
+                font-weight: 600;
+                margin-left: 5px;
+            }
+        }
+
+        input {
+            padding: 5px 10px;
+            outline: none;
+            border: 1px solid #4e4e4e;
+            border-radius: 5px;
+        }
+    }
+}
