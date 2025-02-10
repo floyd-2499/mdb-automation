@@ -99,7 +99,7 @@ const PermIdDetails = () => {
                 if (data) {
                     responseArray.push({
                         ...item,
-                        permid: item.cin,
+                        permid: (item.cin || item["PERM_ID"]),
                         "Organization Name": data["Organization Name"]?.[0] || "-",
                         "HQ Address": data["HQ Address"]?.[0] || "-",
                         "Registered Address": data["Registered Address"]?.[0] || "-",
@@ -185,7 +185,7 @@ const PermIdDetails = () => {
             <br />
             <h4>Upload Excel</h4>
             <ExcelFileUploader onFileUpload={handleFileUpload} /><br />
-            <small style={{ color: "red" }}><i>** Keep <b>cin</b> as permid column header. **</i></small>
+            <small style={{ color: "red" }}><i>** Keep <b>cin or PERM_ID</b> as permid column header. **</i></small>
             <br />
             <br />
 
