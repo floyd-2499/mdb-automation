@@ -56,9 +56,6 @@ const ExcelRequestViewer = () => {
         setMetaData(metadataArray);
     };
 
-
-    console.log(metaData);
-
     const convertJSONToExcel = () => {
         const workbook = new ExcelJS.Workbook();
         const worksheet = workbook.addWorksheet('Sheet 1');

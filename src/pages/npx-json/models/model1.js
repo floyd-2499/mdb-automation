@@ -209,8 +209,6 @@ const Format1 = () => {
         });
 
         const validSections = companiesData.filter((companyData) => companyData !== null);
-
-        console.log('Parsed Data:', validSections);
         return validSections;
     };
 

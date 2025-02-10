@@ -5,7 +5,7 @@ import styles from "./styles.module.scss";
 
 const navItems = [
     { href: uris.home, label: "Home", isActive: false },
-    { href: uris.fileLinks, label: "File - Links", isActive: true },
+    { href: uris.fileLinks, label: "File - Links", isActive: false },
     { href: uris.excel, label: "Excel - Helper", isActive: true },
     { href: uris.permid, label: "PermId API", isActive: true },
     { href: uris.multiExcel, label: "Multi - Excel", isActive: false },
@@ -14,13 +14,14 @@ const navItems = [
     { href: uris.fieldMapper, label: "Client Mapping", isActive: false },
     { href: uris.fieldCalculations, label: "%-Calculations", isActive: false },
     { href: uris.colorExcel, label: "Color-Validate", isActive: false },
-    { href: uris.validateLinks, label: "Validate Links", isActive: true },
-    { href: uris.npxExcel, label: "NPX-EXCEL", isActive: true },
+    { href: uris.validateLinks, label: "Validate Links", isActive: false },
+    { href: uris.npxExcel, label: "NPX-EXCEL", isActive: false },
     { href: uris.npxToJson, label: "NPX-JSON", isActive: false },
     { href: uris.products, label: "Products", isActive: false },
     { href: uris.charts, label: "Charts", isActive: false },
+    { href: uris.customRequest, label: "Cust. API", isActive: true },
+    { href: uris.logicSyntax, label: "Logic Syntax", isActive: true },
 ];
-
 
 const Header = () => {
     return (

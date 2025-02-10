@@ -17,6 +17,8 @@ import FieldCalculations from "./pages/field-calculations";
 import LayoutMain from "./view/layout/index";
 import PdfCompressor from "./pages/pdf-helper";
 import FileLinks from "./pages/file-links";
+import CustomRequestsMain from "./pages/custom-requests";
+import LogicSyntax from "./pages/logic-syntax";
 
 function App() {
   return (
@@ -35,6 +37,8 @@ function App() {
             <Route path={uris.permid} element={<PermIdDetails />} />
             <Route path={uris.pdfCompress} element={<PdfCompressor />} />
             <Route path={uris.fileLinks} element={<FileLinks />} />
+            <Route path={uris.customRequest} element={<CustomRequestsMain />} />
+            <Route path={uris.logicSyntax} element={<LogicSyntax />} />
           </Routes>
         </LayoutMain>
       </Router>

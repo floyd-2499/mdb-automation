@@ -62,11 +62,8 @@ const LanguageDetectorModel2 = () => {
             const data = new Uint8Array(response.data);
             const text = await extractTextFromPDF(data);
 
-            console.log(text);
-
             // Detection using languagedetect
             const detectedLanguages = languageDetect.detect(text);
-            console.log(detectedLanguages);
             const detectedLanguageCode = detectedLanguages[0] ? detectedLanguages[0][0] : null;
 
             // Convert language code to name

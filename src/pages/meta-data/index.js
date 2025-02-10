@@ -54,9 +54,6 @@ const MetaDataAutomated = () => {
             const pdfDocument = await pdfjs.getDocument(data).promise;
             const metadata = await pdfDocument.getMetadata();
 
-            // console.log({ pdfLink, metadata });
-            console.log(response, " - From 403");
-
             return { pdfLink, metadata };
         } catch (error) {
             console.error('Error downloading file:', error);

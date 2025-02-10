@@ -6,35 +6,6 @@ import styles from "./styles.module.scss"
 const MergeJsons = () => {
     const [inputJson, setInputJson] = useState([])
 
-    const handleFileUpload = (e) => {
-        const file = e.target.files[0];
-
-        if (file) {
-            const reader = new FileReader();
-
-            reader.onload = (event) => {
-                const data = new Uint8Array(event.target.result);
-                const workbook = XLSX.read(data, { type: 'array' });
-                let allSheetsData = [];
-
-                workbook.SheetNames.forEach((sheetName) => {
-                    const sheet = workbook.Sheets[sheetName];
-                    const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1, raw: true, range: "A1:Z100" });
-
-                    // Filter out rows with all empty values
-                    const nonEmptyRows = jsonData.filter(row => row.some(cellValue => cellValue !== null && cellValue !== ''));
-
-                    allSheetsData = [...allSheetsData, ...nonEmptyRows];
-                });
-
-                setInputJson(allSheetsData);
-            };
-
-            reader.readAsArrayBuffer(file);
-        }
-    };
-
-
     // This is for if there are headers in all sheets
     // const convertExcelToJson = async (data) => {
     //     const workbook = new ExcelJS.Workbook();
@@ -106,6 +77,35 @@ const MergeJsons = () => {
             URL.revokeObjectURL(url);
         });
     };
+
+    const handleFileUpload = (e) => {
+        const file = e.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = (event) => {
+                const data = new Uint8Array(event.target.result);
+                const workbook = XLSX.read(data, { type: 'array' });
+                let allSheetsData = [];
+
+                workbook.SheetNames.forEach((sheetName) => {
+                    const sheet = workbook.Sheets[sheetName];
+                    const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1, raw: true, range: "A1:Z100" });
+
+                    // Filter out rows with all empty values
+                    const nonEmptyRows = jsonData.filter(row => row.some(cellValue => cellValue !== null && cellValue !== ''));
+
+                    allSheetsData = [...allSheetsData, ...nonEmptyRows];
+                });
+
+                setInputJson(allSheetsData);
+            };
+
+            reader.readAsArrayBuffer(file);
+        }
+    };
+
 
     return (
         <div className={styles["page-contents"]}>
