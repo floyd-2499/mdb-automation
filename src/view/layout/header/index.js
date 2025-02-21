@@ -14,7 +14,7 @@ const navItems = [
     { href: uris.fieldMapper, label: "Client Mapping", isActive: false },
     { href: uris.fieldCalculations, label: "%-Calculations", isActive: false },
     { href: uris.colorExcel, label: "Color-Validate", isActive: false },
-    { href: uris.validateLinks, label: "Validate Links", isActive: false },
+    { href: uris.validateLinks, label: "Validate Links", isActive: true },
     { href: uris.npxExcel, label: "NPX-EXCEL", isActive: false },
     { href: uris.npxToJson, label: "NPX-JSON", isActive: false },
     { href: uris.products, label: "Products", isActive: false },

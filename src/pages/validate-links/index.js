@@ -65,23 +65,57 @@ const PDFReader = () => {
         }
     }
 
+    // bulk run
+    // async function validateLinks() {
+    //     const startTime = new Date();
+    //     setLoading(true)
+    //     const updatedData = await Promise.all(
+    //         jsonData.map(async (item) => {
+    //             const { url, link } = item;
+    //             const validstatus = await checkValidity(url || link);
+    //             return { ...item, Status: validstatus, };
+    //         })
+    //     );
+
+    //     const endTime = new Date();
+    //     const totalTime = endTime - startTime; // Calculate total validation time in milliseconds
+    //     setValidationTime((totalTime) / 60000);
+    //     setLoading(false)
+    //     setValidatedData(updatedData);
+    // }
+
     async function validateLinks() {
         const startTime = new Date();
-        setLoading(true)
-        const updatedData = await Promise.all(
-            jsonData.map(async (item) => {
-                const { url, link } = item;
-                const validstatus = await checkValidity(url || link);
-                return { ...item, Status: validstatus, };
-            })
-        );
+        setLoading(true);
+
+        const batchSize = 100; // Process 100 links at a time
+        let updatedData = [];
+
+        for (let i = 0; i < jsonData.length; i += batchSize) {
+            const batch = jsonData.slice(i, i + batchSize);
+
+            const batchResults = await Promise.all(
+                batch.map(async (item) => {
+                    const { url, link } = item;
+                    const validstatus = await checkValidity(url || link);
+                    return { ...item, Status: validstatus };
+                })
+            );
+
+            // Push completed batch to state
+            setValidatedData((prev) => [...prev, ...batchResults]);
+
+            // Add processed batch to updatedData
+            updatedData = [...updatedData, ...batchResults];
+        }
 
         const endTime = new Date();
-        const totalTime = endTime - startTime; // Calculate total validation time in milliseconds
-        setValidationTime((totalTime) / 60000);
-        setLoading(false)
-        setValidatedData(updatedData);
+        setValidationTime((endTime - startTime) / 60000);
+        setLoading(false);
     }
+
+    console.log(validatedData);
+
 
     const convertJSONToExcel = () => {
         const workbook = new ExcelJS.Workbook();
@@ -125,7 +159,7 @@ const PDFReader = () => {
             <button className={styles['button']} onClick={validateLinks}>Validate PDF URLs</button>
             {loading ? <h4 style={{ color: "red" }}>Loading ...</h4> : ""}
             {validationTime && <h4 style={{ color: "blue" }}>Total Validation Time: {validationTime?.toFixed(2)} minutes</h4>}
-            {validatedData?.length > 1 && <h3 style={{ color: "green" }}>Validation Done</h3>}
+            {validatedData?.length > 1 && <h3 style={{ color: "green" }}>Validation Done for {validatedData?.length} links</h3>}
             <br />
             <div>
                 <h1>JSON to Excel Converter</h1>
